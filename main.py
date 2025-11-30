@@ -1,5 +1,6 @@
 from random import randint
 import sys
+from time import sleep
 
 def to_dict(string):
     str_dict = {}
@@ -78,8 +79,16 @@ def main():
         input_w = input("word: ")
         if "life+" == input_w:
             tries += 2
-        elif 5 != len(input_w) or input_w + "\n" not in words:
-            sys.stdout.write("\x1b[1F")
+        elif 5 != len(input_w):
+            print(f'word must be 5 letters long')
+            sleep(3)
+            sys.stdout.write("\x1b[2F")
+            sys.stdout.write("\x1b[0J")
+            continue
+        elif input_w + "\n" not in words:
+            print(f'"{input_w}" is not a valid word')
+            sleep(3)
+            sys.stdout.write("\x1b[2F")
             sys.stdout.write("\x1b[0J")
             continue
 
