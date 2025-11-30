@@ -3,6 +3,10 @@ import sys
 from time import sleep
 
 def to_dict(string):
+    """
+    :param string:
+    :return dict:
+    """
     str_dict = {}
 
     for i in range(len(string)):
@@ -19,6 +23,11 @@ def to_dict(string):
 
 
 def compare(w1, w2):
+    """
+    :param w1:
+    :param w2:
+    :return string:
+    """
     string = ["_" for _ in range(len(w2))]
     w1_dict = to_dict(w1)
     w2_dict = to_dict(w2)
@@ -28,15 +37,21 @@ def compare(w1, w2):
     for k in w2_dict:
         try:
             if w1_dict[k] == w2_dict[k]:
+                # if all the repetitions of the letter
+                # are in the correct place...
                 for i in w2_dict[k]["index"]:
                     string[i] = "^"
             elif w1_dict[k]["count"] >= w2_dict[k]["count"]:
+                # in case of fewer repetitions of letter in w2
+                # we must mark status (^,!) of all repetitions in w2
                 for i in w2_dict[k]["index"]:
                     if i in w1_dict[k]["index"]:
                         string[i] = "^"
                     else:
                         string[i] = "!"
             else:
+                # in case of more repetitions of letter in w2
+                # we must mark status (^,!) of correct number of repetitions
                 start = w2_dict[k]["count"] - w1_dict[k]["count"]
                 for i in w2_dict[k]["index"]:
                     if i in w1_dict[k]["index"]:
